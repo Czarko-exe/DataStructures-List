@@ -361,3 +361,14 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# === Konfiguracja i pliki robocze Visual Studio Code ===
+.vscode/
+
+# === Skompilowane pliki wykonywalne (Windows, Linux, Mac) ===
+*.exe
+*.out
+*.app
+
+# === Pliki obiektowe i tymczasowe kompilatora GCC/MinGW ===
+*.o
