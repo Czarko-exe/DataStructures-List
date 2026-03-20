@@ -23,11 +23,12 @@ SinglyLinkedList::~SinglyLinkedList() {         //definicja destruktora listy
 void SinglyLinkedList::pushFront(int value) {
     Node* newNode = new Node(value);            //tworzymy wskaźnik na nowy node, konstruktor ustawia go na value(val) i next = nullptr
                                                 //"new" zwraca ADRES utworzonego elementu, dlatego możemy go przypisać go do wskaźnika
-    newNode->next = head;                       //next newNode'a wskazuje na obecny head, więc "podłączamy" go do listy
-    head = newNode;                             //ustawiamy head na newNode
-
-    if(tail == nullptr) {                       //jeśli tail wskazuje na nullptr => newNode jest jedynym elementem w liście
-        tail = newNode;                         //ustawiamy tail na newNode
+    if(head == nullptr) {                       
+        head = tail = newNode;                  //jeśli head == nullptr, oznacza to że jest to pierwszy element listy                       
+    }                                           //ustawiamy wtedy zarówno head jak i tail na newNode
+    else {
+        newNode->next = head;                   //next newNode'a wskazuje na obecny head, więc "podłączamy" go do listy
+        head = newNode;                         //ustawiamy head na newNode
     }
     size++;                                     //zwiekszamy zmienną size reprezentującą ilość elementów w tablicy, NIE JEJ ROZMIAR
 }
@@ -36,8 +37,7 @@ void SinglyLinkedList::pushBack(int value) {
     Node* newNode = new Node(value);            //ponownie tworzymy nowy element
 
     if(head == nullptr) {                       //sprawdzamy czy to nie pierwszy element listy (jeśli head == nullptr => tak)
-        head = newNode;                         //ustawiamy wtedy zarówno head jak i tail na newNode
-        tail = newNode;
+        head = tail = newNode;                  //ustawiamy wtedy zarówno head jak i tail na newNode
     }
     else {                                      //jeśli NIE (jest już coś w liście)
         tail->next = newNode;                   //wskaźnik next taila zmieniamy z nullptr na newNode
@@ -63,7 +63,7 @@ void SinglyLinkedList::pushAt(int index, int value) {
 
     Node* newNode = new Node(value);            //znane nam już tworzenie nowego node'a
 
-    Node* current = head;                       //tworzymy wskaźnik current na head
+    Node* current = head;                       //tworzymy wskaźnik current z adresem z head
     for(int i = 0; i < index - 1; i++) {        //iterujemy aż dostaniemy sie do elementu PRZED (index - 1) pozycją której oczekujemy
         current = current->next;                //ustawiamy tymczasowe currenty aż dotrzemy do oczekiwanego
     }
@@ -78,10 +78,10 @@ void SinglyLinkedList::popFront() {
         return;
     }
 
-    Node* temp = head;                          //tworzymy wskaźnik temp który przechowa nam head
+    Node* oldHead = head;                       //tworzymy wskaźnik oldHead który przechowa nam head
     head = head->next;                          //zmieniamy head, na wcześniej drugi element listy
 
-    delete temp;                                //usuwamy wskaźnik pomocniczy (stary head)
+    delete oldHead;                             //usuwamy wskaźnik pomocniczy (stary head)
     size--;                                     //zmniejszenie licznika elementów
 
     if(head == nullptr) {                       //jeśli przez usunięcie elementu lista stała się pusta, ustawiamy tail na nullptr
