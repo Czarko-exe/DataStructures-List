@@ -15,6 +15,9 @@ SinglyLinkedList::~SinglyLinkedList() {         //definicja destruktora listy
         delete current;                         //usuwamy current
         current = nextNode;                     //nasz nowy current jest wskaźnikiem nowego na nowy head (wcześniej drugi node)
     }
+    head = nullptr;
+    tail = nullptr;
+    size = 0;
 }
 
 void SinglyLinkedList::pushFront(int value) {
