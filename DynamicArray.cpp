@@ -1,4 +1,4 @@
-#include "DynamicArray.h"
+#include "DynamicArray.hpp"
 #include <algorithm>
 
 DynamicArray::DynamicArray() : data(nullptr), size(0), capacity(4) {} // Konstruktor inicjalizujący wskaźnik na tablicę jako nullptr, rozmiar jako 0 i pojemność jako 4
@@ -25,11 +25,27 @@ void DynamicArray::push_back(int value) {
 	data[size++] = value; // Dodajemy nowy element na koniec tablicy i zwiększamy rozmiar
 }
 
-//Dodać insert_at ----------------------------------------------------
+void DynamicArray::push_at(int index, int value) {
+	if (index == 0) {
+		push_front(value);
+	}
+	else if (index == size) {
+		push_back(value);
+	}
+	else {
+		if (size == capacity) {
+			resize();
+		}
+		for (int i = size; i > index; i++)	{
+			data[i] = data[i - 1];
+		}
+		data[index] = value;
+	}
+}
 
 void DynamicArray::pop_front() {
 	if (size > 0) {
-		for (int i = 0; i < size - 1; ++i) { // Przesuwamy wszystkie elementy o jedno miejsce w lewo
+		for (int i = 0; i < size - 1; i++) { // Przesuwamy wszystkie elementy o jedno miejsce w lewo
 			data[i] = data[i + 1];
 		}
 		size--; // Zmniejszamy rozmiar
@@ -42,15 +58,28 @@ void DynamicArray::pop_back() {
 	}
 }
 
-//Dodać remove_at ----------------------------------------------------
+void DynamicArray::pop_at(int index) {
+	if (index == 0) {
+		pop_front();
+	}
+	else if (index == size) {
+		pop_back();
+	}
+	else {
+		for (int i = index; i < size - 1; i++) {
+			data[i] = data[i + 1];
+		}
+		size--;
+	}
+}
 
-bool DynamicArray::find(int value) const {
+int DynamicArray::find(int value) const {
 	for (int i = 0; i < size; ++i) { // Przeszukujemy tablicę w poszukiwaniu wartości
 		if (data[i] == value) {
-			return true; // Jeśli znajdziemy, zwracamy true
+			return i; // Jeśli znajdziemy, zwracamy indeks
 		}
 	}
-	return false; // Jeśli nie znajdziemy, zwracamy false
+	return -1; // Jeśli nie znajdziemy, zwracamy indeks
 }
 
 void DynamicArray::resize() {
