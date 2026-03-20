@@ -1,6 +1,7 @@
-﻿#include <iostream>
+﻿#include "menu.hpp"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    menu();
+    return 0;
 }
