@@ -115,3 +115,89 @@ void DoublyLinkedList::popBack() {
         tail->next = nullptr;                   //jeśli nie był to jedyny element, to next taila ustawiam na nullptr
     }
 }
+
+void DoublyLinkedList::popAt(int index) {
+    if(index < 0 || index >= size) {            //te trzy if'y to dosłowna kopia z SinglyLinkedList
+        return;                                 //przypadek gdy jest poza zakresem
+    }
+
+    if(index == 0) {                            //przypadek gdy chcemy usunąć pierwszy element
+        popFront();
+        return;
+    }
+
+    if(index == size - 1) {                     //przypadek gdy chcemy usunąć ostatni element
+        popBack();
+        return;
+    }
+    
+    Node* current = head;
+    for(int i = 0; i < index - 1; i++) {
+        current = current->next;                //ponowny mechanizm iteracyjny aż do elementu poprzedzającego usuwany
+    }
+
+    Node* toDelete = current->next;
+
+    current->next = toDelete->next;
+    toDelete->next->prev = current;
+
+    delete toDelete;
+    size--;
+}
+
+int DoublyLinkedList::find(int value) const {
+    Node* current = head;                       //implementacja find dokładnie taka jak w SinglyLinkedList
+    int index = 0;                              //tu nie bawimy sie żadnymi wskaźnikami, po prostu szukamy w liście
+
+    while(current != nullptr) {
+        if(current->value == value){
+            return index;
+        }
+        current = current->next;
+        index++;
+    }
+    return -1;
+}
+
+//-------------------------DODATKOWE FUNKCJONALNOŚCI DLA TESTÓW I CZYTELNOŚCI ;PP------------------------------------------------
+
+void DoublyLinkedList::print() const {
+    Node* current = head;
+
+    cout << "[";
+    while(current != nullptr) {
+        cout << current->value;
+        if(current->next != nullptr) {
+            cout << ", ";
+        }
+        current = current->next;
+    }
+    cout << "]" << endl;
+}
+
+void DoublyLinkedList::clear() {
+    Node* current = head;
+
+    while(current != nullptr) {
+        Node* nextNode = current->next;
+        delete current;
+        current = nextNode;
+    }
+    head = nullptr;
+    tail = nullptr;
+    size = 0;
+}
+
+//-------------------------ZŁOŻONOŚĆ OBLICZENIOWA, KOMENTARZY KILKA------------------------------------------------
+
+/*
+pushFront - O(1) - dodajemy na początek, nic nie iterujemy
+pushBack - O(1) - dodajemy na koniec, mamy tail więc idzie to szybko
+pushAT - O(n) - musimy dojść do elementu w najgorszym przypadku size - 1
+popFront - O(1) - usuwamy pierwszy element, na który mamy head
+popBack - O(1) - usuwamy ostatni element, do którego możemy przejść z tail->prev
+popAt - O(n) - musimy dojść do elementu w najgorszym przypadku size - 1
+find - O(n) - musimy dojść do elementu w najgorszym przypadku size
+clear - O(n) - musimy usunąć każdy element
+print - O(n) - musimy wyświetlić każdy element
+l*/

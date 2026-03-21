@@ -123,7 +123,7 @@ void SinglyLinkedList::popAt(int index) {
         return;
     }
 
-    if(index == size) {                         //przypadek gdy chcemy usunąć ostatni element
+    if(index == size - 1) {                     //przypadek gdy chcemy usunąć ostatni element
         popBack();
         return;
     }
@@ -136,6 +136,10 @@ void SinglyLinkedList::popAt(int index) {
     Node* toDelete = current->next;             //tworzymy tymczasowy wskaźnik na element do usunięcia, jako następny element
     current->next = toDelete->next;             //podmieniamy next z currenta na next toDelete (wskaźnik na "następniejszy" element)
 
+    if(toDelete == tail) {
+        current = tail;                         //sprawdzamy czy toDelete nie był tailem, jeśli tak to ustawiamy current tailem
+    }
+
     delete toDelete;                            //usuwamy toDelete (węzeł który de facto mieliśmy usunąć)
     size--;                                     //zmniejszamy size
 }
@@ -143,6 +147,7 @@ void SinglyLinkedList::popAt(int index) {
 int SinglyLinkedList::find(int value) const {
     Node* current = head;
     int index = 0;                              //index węzła w którym się znajdujemy (notabene head)
+    
     while(current != nullptr) {                 //iterujemy do końca tablicy
         if(current->value == value) {           //sprawdzamy czy current(value) to value którego szukamy
             return index;                       //jeśli tak to zwracamy zmienną index która jest indexem węzła w którym jesteśmy
