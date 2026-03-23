@@ -14,6 +14,7 @@ public:
 	void pop_at(int index); //Usuwa element z określonej pozycji w tablicy
 	
 	int find(int value) const; //Wyszukuje element w tablicy
+	void print() const; //Funkcja do wyświetlania zawartości tablicy (do testów)
 
 	//int get(int index) const; //getter - zwraca wartość elementu na określonym indeksie
 	//void set(int index, int value); //setter - ustawia wartość elementu na określonym indeksie

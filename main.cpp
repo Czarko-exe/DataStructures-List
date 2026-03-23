@@ -1,7 +1,9 @@
 ﻿#include "menu.hpp"
+#include "TestFunctional.hpp"
 
 int main()
 {
-    menu();
+    //menu();
+    test();
     return 0;
 }

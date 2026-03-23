@@ -139,6 +139,7 @@
     <ClInclude Include="DynamicArray.hpp" />
     <ClInclude Include="menu.hpp" />
     <ClInclude Include="SinglyLinkedList.hpp" />
+    <ClInclude Include="TestFunctional.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
