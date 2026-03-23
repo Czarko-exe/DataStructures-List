@@ -9,9 +9,9 @@ SinglyLinkedList::SinglyLinkedList() {      //definicja konstruktora pustej list
 }
 
 SinglyLinkedList::~SinglyLinkedList() {         //definicja destruktora listy
-    Node* current = head;                       //tworzymy wskaźnik "current" na pierwszy (head) element listy
+    SNode* current = head;                      //tworzymy wskaźnik "current" na pierwszy (head) element listy
     while(current != nullptr){                  //dopóki są elementy (dopóki wskaźnik na następny element nie jest nullptr)
-        Node* nextNode = current->next;         //tworzymy destruktor nextNode, który bierze wartość next z currenta do zapamiętania
+        SNode* nextNode = current->next;        //tworzymy destruktor nextNode, który bierze wartość next z currenta do zapamiętania
         delete current;                         //usuwamy current
         current = nextNode;                     //nasz nowy current jest wskaźnikiem nowego na nowy head (wcześniej drugi node)
     }
@@ -21,7 +21,7 @@ SinglyLinkedList::~SinglyLinkedList() {         //definicja destruktora listy
 }
 
 void SinglyLinkedList::pushFront(int value) {
-    Node* newNode = new Node(value);            //tworzymy wskaźnik na nowy node, konstruktor ustawia go na value(val) i next = nullptr
+    SNode* newNode = new SNode(value);          //tworzymy wskaźnik na nowy node, konstruktor ustawia go na value(val) i next = nullptr
                                                 //"new" zwraca ADRES utworzonego elementu, dlatego możemy go przypisać go do wskaźnika
     if(head == nullptr) {                       
         head = tail = newNode;                  //jeśli head == nullptr, oznacza to że jest to pierwszy element listy                       
@@ -34,7 +34,7 @@ void SinglyLinkedList::pushFront(int value) {
 }
 
 void SinglyLinkedList::pushBack(int value) {
-    Node* newNode = new Node(value);            //ponownie tworzymy nowy element
+    SNode* newNode = new SNode(value);          //ponownie tworzymy nowy element
 
     if(head == nullptr) {                       //sprawdzamy czy to nie pierwszy element listy (jeśli head == nullptr => tak)
         head = tail = newNode;                  //ustawiamy wtedy zarówno head jak i tail na newNode
@@ -61,9 +61,9 @@ void SinglyLinkedList::pushAt(int index, int value) {
         return;
     }
 
-    Node* newNode = new Node(value);            //znane nam już tworzenie nowego node'a
+    SNode* newNode = new SNode(value);          //znane nam już tworzenie nowego node'a
 
-    Node* current = head;                       //tworzymy wskaźnik current z adresem z head
+    SNode* current = head;                      //tworzymy wskaźnik current z adresem z head
     for(int i = 0; i < index - 1; i++) {        //iterujemy aż dostaniemy sie do elementu PRZED (index - 1) pozycją której oczekujemy
         current = current->next;                //ustawiamy tymczasowe currenty aż dotrzemy do oczekiwanego
     }
@@ -78,7 +78,7 @@ void SinglyLinkedList::popFront() {
         return;
     }
 
-    Node* oldHead = head;                       //tworzymy wskaźnik oldHead który przechowa nam head
+    SNode* oldHead = head;                      //tworzymy wskaźnik oldHead który przechowa nam head
     head = head->next;                          //zmieniamy head, na wcześniej drugi element listy
 
     delete oldHead;                             //usuwamy wskaźnik pomocniczy (stary head)
@@ -102,7 +102,7 @@ void SinglyLinkedList::popBack() {
         return;
     }
 
-    Node* current = head;                       //(znowu) będziemy iterować przez X (prawie wszystkie) elementów listy
+    SNode* current = head;                      //(znowu) będziemy iterować przez X (prawie wszystkie) elementów listy
     while(current->next != tail) {              //dopóki next currenta nie jest nullptr'em
         current = current->next;                //przechodzimy przez wszystkie elementy aż do przedostatniego
     }
@@ -128,16 +128,16 @@ void SinglyLinkedList::popAt(int index) {
         return;
     }
 
-    Node* current = head;
+    SNode* current = head;
     for(int i = 0; i < index - 1; i++) {        //iterujemy aż do elementu PRZED miejscem gdzie chcemy wstawić
         current = current->next;
     }
 
-    Node* toDelete = current->next;             //tworzymy tymczasowy wskaźnik na element do usunięcia, jako następny element
+    SNode* toDelete = current->next;            //tworzymy tymczasowy wskaźnik na element do usunięcia, jako następny element
     current->next = toDelete->next;             //podmieniamy next z currenta na next toDelete (wskaźnik na "następniejszy" element)
 
     if(toDelete == tail) {
-        current = tail;                         //sprawdzamy czy toDelete nie był tailem, jeśli tak to ustawiamy current tailem
+        tail = current;                         //sprawdzamy czy toDelete nie był tailem, jeśli tak to ustawiamy current tailem
     }
 
     delete toDelete;                            //usuwamy toDelete (węzeł który de facto mieliśmy usunąć)
@@ -145,7 +145,7 @@ void SinglyLinkedList::popAt(int index) {
 }
 
 int SinglyLinkedList::find(int value) const {
-    Node* current = head;
+    SNode* current = head;
     int index = 0;                              //index węzła w którym się znajdujemy (notabene head)
     
     while(current != nullptr) {                 //iterujemy do końca tablicy
@@ -161,7 +161,7 @@ int SinglyLinkedList::find(int value) const {
 //-------------------------DODATKOWE FUNKCJONALNOŚCI DLA TESTÓW I CZYTELNOŚCI ;PP------------------------------------------------
 
 void SinglyLinkedList::print() const {
-    Node* current = head;
+    SNode* current = head;
 
     cout << "[";
     while(current != nullptr) {
@@ -175,10 +175,10 @@ void SinglyLinkedList::print() const {
 }
 
 void SinglyLinkedList::clear() {
-    Node* current = head;
+    SNode* current = head;
 
     while(current != nullptr) {
-        Node* nextNode = current->next;
+        SNode* nextNode = current->next;
         delete current;
         current = nextNode;
     }

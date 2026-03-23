@@ -9,9 +9,9 @@ DoublyLinkedList::DoublyLinkedList() {      //definicja konstruktora pustej list
 }
 
 DoublyLinkedList::~DoublyLinkedList() {         //definicja destruktora listy
-    Node* current = head;                       //tworzymy wskaźnik "current" na pierwszy (head) element listy
+    DNode* current = head;                      //tworzymy wskaźnik "current" na pierwszy (head) element listy
     while(current != nullptr){                  //dopóki są elementy (dopóki wskaźnik na następny element nie jest nullptr)
-        Node* nextNode = current->next;         //tworzymy destruktor nextNode, który bierze wartość next z currenta do zapamiętania
+        DNode* nextNode = current->next;        //tworzymy destruktor nextNode, który bierze wartość next z currenta do zapamiętania
         delete current;                         //usuwamy current
         current = nextNode;                     //nasz nowy current jest wskaźnikiem nowego na nowy head (wcześniej drugi node)
     }
@@ -21,7 +21,7 @@ DoublyLinkedList::~DoublyLinkedList() {         //definicja destruktora listy
 }
 
 void DoublyLinkedList::pushFront(int value) {   
-    Node* newNode = new Node(value);            //tworzymy wskaźnik na nowy node, konstruktor ustawia go na value(val), next i prev nullptr
+    DNode* newNode = new DNode(value);          //tworzymy wskaźnik na nowy node, konstruktor ustawia go na value(val), next i prev nullptr
                                                 //"new" zwraca ADRES utworzonego elementu, dlatego możemy go przypisać go do wskaźnika
     if(head == nullptr) {                       //jeśli jest to pierwszy element listy
         head = tail = newNode;                  //head i tail ustawiamy na newNode
@@ -35,7 +35,7 @@ void DoublyLinkedList::pushFront(int value) {
 }
 
 void DoublyLinkedList::pushBack(int value) {
-    Node* newNode = new Node(value);            //nie wiem czy ktoś będzie czytał ten sam komentach XYZ raz, więc po prostu [pozdrawiam :P]
+    DNode* newNode = new DNode(value);          //nie wiem czy ktoś będzie czytał ten sam komentach XYZ raz, więc po prostu [pozdrawiam :P]
 
     if(head == nullptr) {                       //ponownie sprawdzenie czy lista jest pusta
         head = tail = newNode;
@@ -63,8 +63,8 @@ void DoublyLinkedList::pushAt(int index, int value) {
         return;
     }                                           
 
-    Node* newNode = new Node(value);
-    Node* current = head;
+    DNode* newNode = new DNode(value);
+    DNode* current = head;
     for(int i = 0; i < index - 1; i++) {        //ponownie ten sam mechanizm iteracyjny
         current = current->next;
     }
@@ -83,7 +83,7 @@ void DoublyLinkedList::popFront() {
         return;
     }
 
-    Node* oldHead = head;                       //tworzymy oldHead do przechowania head (by go usunąć)
+    DNode* oldHead = head;                      //tworzymy oldHead do przechowania head (by go usunąć)
     head = head->next;                          //nowy head jest nextem obecnego (jeszcze) head'a
 
     delete oldHead;                             //usuwamy stary head
@@ -102,7 +102,7 @@ void DoublyLinkedList::popBack() {
         return;
     }
 
-    Node* oldTail = tail;                       //jak z oldHead, robie oldTail
+    DNode* oldTail = tail;                      //jak z oldHead, robie oldTail
     tail = tail->prev;                          //nowy tail ustawiam prev starego taila
 
     delete oldTail;                             //usuwam oldTail
@@ -131,12 +131,12 @@ void DoublyLinkedList::popAt(int index) {
         return;
     }
     
-    Node* current = head;
+    DNode* current = head;
     for(int i = 0; i < index - 1; i++) {
         current = current->next;                //ponowny mechanizm iteracyjny aż do elementu poprzedzającego usuwany
     }
 
-    Node* toDelete = current->next;
+    DNode* toDelete = current->next;
 
     current->next = toDelete->next;
     toDelete->next->prev = current;
@@ -146,7 +146,7 @@ void DoublyLinkedList::popAt(int index) {
 }
 
 int DoublyLinkedList::find(int value) const {
-    Node* current = head;                       //implementacja find dokładnie taka jak w SinglyLinkedList
+    DNode* current = head;                      //implementacja find dokładnie taka jak w SinglyLinkedList
     int index = 0;                              //tu nie bawimy sie żadnymi wskaźnikami, po prostu szukamy w liście
 
     while(current != nullptr) {
@@ -162,7 +162,7 @@ int DoublyLinkedList::find(int value) const {
 //-------------------------DODATKOWE FUNKCJONALNOŚCI DLA TESTÓW I CZYTELNOŚCI ;PP------------------------------------------------
 
 void DoublyLinkedList::print() const {
-    Node* current = head;
+    DNode* current = head;
 
     cout << "[";
     while(current != nullptr) {
@@ -176,10 +176,10 @@ void DoublyLinkedList::print() const {
 }
 
 void DoublyLinkedList::clear() {
-    Node* current = head;
+    DNode* current = head;
 
     while(current != nullptr) {
-        Node* nextNode = current->next;
+        DNode* nextNode = current->next;
         delete current;
         current = nextNode;
     }

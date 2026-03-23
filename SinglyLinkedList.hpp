@@ -2,17 +2,17 @@
 #include <iostream>
 
 
-struct Node {           //struct to po prostu publiczny class
+struct SNode {           //struct to po prostu publiczny class
     int value;
-    Node* next;         //wskaźnik na next element 
+    SNode* next;         //wskaźnik na next element 
 
-    Node(int val) : value(val), next(nullptr) {}        //konstruktor
+    SNode(int val) : value(val), next(nullptr) {}        //konstruktor
 };
 
 class SinglyLinkedList {
 private:
-    Node* head;         //wskaźnik na head
-    Node* tail;         //wskaźnik na tail
+    SNode* head;         //wskaźnik na head
+    SNode* tail;         //wskaźnik na tail
     int size;
 
 public:
