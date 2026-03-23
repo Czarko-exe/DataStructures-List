@@ -26,17 +26,17 @@ void DynamicArray::push_back(int value) {
 }
 
 void DynamicArray::push_at(int index, int value) {
-	if (index == 0) {
+	if (index == 0) {	// Jeśli indeks to 0, dodajemy element na początek tablicy
 		push_front(value);
 	}
-	else if (index == size) {
+	else if (index == size) {	// Jeśli indeks to rozmiar, dodajemy element na koniec tablicy
 		push_back(value);
 	}
 	else {
 		if (size == capacity) {
 			resize();
 		}
-		for (int i = size; i > index; i++)	{
+		for (int i = size; i > index; i++) {	// Przesuwamy wszystkie elementy od indeksu do końca o jedno miejsce w prawo
 			data[i] = data[i - 1];
 		}
 		data[index] = value;
@@ -59,14 +59,14 @@ void DynamicArray::pop_back() {
 }
 
 void DynamicArray::pop_at(int index) {
-	if (index == 0) {
+	if (index == 0) {	// Jeśli indeks to 0, usuwamy element z początku tablicy
 		pop_front();
 	}
-	else if (index == size) {
+	else if (index == size) {	// Jeśli indeks to rozmiar, usuwamy element z końca tablicy
 		pop_back();
 	}
 	else {
-		for (int i = index; i < size - 1; i++) {
+		for (int i = index; i < size - 1; i++) {	// Przesuwamy wszystkie elementy od indeksu do końca o jedno miejsce w lewo
 			data[i] = data[i + 1];
 		}
 		size--;

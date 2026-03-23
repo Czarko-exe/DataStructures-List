@@ -127,12 +127,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DoublyLinkedList.cpp" />
     <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="SinglyLinkedList.cpp" />
+    <ClCompile Include="TestFunctional.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DoublyLinkedList.hpp" />
     <ClInclude Include="DynamicArray.hpp" />
     <ClInclude Include="menu.hpp" />
     <ClInclude Include="SinglyLinkedList.hpp" />
