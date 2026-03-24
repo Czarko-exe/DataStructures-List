@@ -132,6 +132,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="SinglyLinkedList.cpp" />
+    <ClCompile Include="Tester.cpp" />
     <ClCompile Include="TestFunctional.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,7 +140,11 @@
     <ClInclude Include="DynamicArray.hpp" />
     <ClInclude Include="menu.hpp" />
     <ClInclude Include="SinglyLinkedList.hpp" />
+    <ClInclude Include="Tester.hpp" />
     <ClInclude Include="TestFunctional.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="seeds.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
