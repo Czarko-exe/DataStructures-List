@@ -372,3 +372,5 @@ FodyWeavers.xsd
 
 # === Pliki obiektowe i tymczasowe kompilatora GCC/MinGW ===
 *.o
+
+output/

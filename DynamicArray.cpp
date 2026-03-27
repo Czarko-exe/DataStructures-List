@@ -8,7 +8,7 @@ DynamicArray::~DynamicArray() { // Destruktor zwalniający pamięć zajmowaną p
 	delete[] data;
 }
 
-void DynamicArray::push_front(int value) {
+void DynamicArray::pushFront(int value) {
 	if (size == capacity) { // Sprawdzamy czy tablica jest pełna
 		resize(); // Jeśli tak, to zwiększamy jej pojemność
 	}
@@ -19,20 +19,20 @@ void DynamicArray::push_front(int value) {
 	size++; // Zwiększamy rozmiar
 }
 
-void DynamicArray::push_back(int value) {
+void DynamicArray::pushBack(int value) {
 	if (size == capacity) { // Sprawdzamy czy tablica jest pełna
 		resize(); // Jeśli tak, to zwiększamy jej pojemność
 	}
 	data[size++] = value; // Dodajemy nowy element na koniec tablicy i zwiększamy rozmiar
 }
 
-void DynamicArray::push_at(int index, int value) {
+void DynamicArray::pushAt(int index, int value) {
 	if (index < 0 || index > size) return;
 	if (index == 0) {	// Jeśli indeks to 0, dodajemy element na początek tablicy
-		push_front(value);
+		pushFront(value);
 	}
 	else if (index == size) {	// Jeśli indeks to rozmiar, dodajemy element na koniec tablicy
-		push_back(value);
+		pushBack(value);
 	}
 	else {
 		if (size == capacity) {
@@ -46,7 +46,7 @@ void DynamicArray::push_at(int index, int value) {
 	}
 }
 
-void DynamicArray::pop_front() {
+void DynamicArray::popFront() {
 	if (size > 0) {
 		for (int i = 0; i < size - 1; i++) { // Przesuwamy wszystkie elementy o jedno miejsce w lewo
 			data[i] = data[i + 1];
@@ -55,18 +55,18 @@ void DynamicArray::pop_front() {
 	}
 }
 
-void DynamicArray::pop_back() {
+void DynamicArray::popBack() {
 	if (size > 0) {
 		size--; // Zmniejszamy rozmiar, usuwając ostatni element
 	}
 }
 
-void DynamicArray::pop_at(int index) {
+void DynamicArray::popAt(int index) {
 	if (index == 0) {	// Jeśli indeks to 0, usuwamy element z początku tablicy
-		pop_front();
+		popFront();
 	}
 	else if (index == size) {	// Jeśli indeks to rozmiar, usuwamy element z końca tablicy
-		pop_back();
+		popBack();
 	}
 	else {
 		for (int i = index; i < size - 1; i++) {	// Przesuwamy wszystkie elementy od indeksu do końca o jedno miejsce w lewo

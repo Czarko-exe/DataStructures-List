@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "menu.hpp"
 #include "Tester.hpp"
 
@@ -48,12 +49,13 @@ int menu() {
 			std::cout << "Select data amount:" << std::endl;
 			std::cout << "1. 1000" << std::endl;
 			std::cout << "2. 2000" << std::endl;
-			std::cout << "3. 3000" << std::endl;
-			std::cout << "4. 4000" << std::endl;
-			std::cout << "5. 5000" << std::endl;
-			std::cout << "6. 6000" << std::endl;
-			std::cout << "7. 7000" << std::endl;
-			std::cout << "8. 8000" << std::endl;
+			std::cout << "3. 4000" << std::endl;
+			std::cout << "4. 8000" << std::endl;
+			std::cout << "5. 16000" << std::endl;
+			std::cout << "6. 32000" << std::endl;
+			std::cout << "7. 64000" << std::endl;
+			std::cout << "8. 128000" << std::endl;
+			std::cout << "9. All" << std::endl;
 			std::cout << "0. Back" << std::endl;
 			std::cout << std::endl;
 			std::cin >> choice;
@@ -65,22 +67,25 @@ int menu() {
 					amount = 2000;
 					break;
 				case 3:
-					amount = 3000;
-					break;
-				case 4:
 					amount = 4000;
 					break;
+				case 4:
+					amount = 8000;
+					break;
 				case 5:
-					amount = 5000;
+					amount = 16000;
 					break;
 				case 6:
-					amount = 6000;
+					amount = 32000;
 					break;
 				case 7:
-					amount = 7000;
+					amount = 64000;
 					break;
 				case 8:
-					amount = 8000;
+					amount = 128000;
+					break;
+				case 9:
+					amount = -1;
 					break;
 				case 0:
 					amount_menu = false;
@@ -90,7 +95,7 @@ int menu() {
 					break;
 			}
 
-			if (0 < choice && choice < 9) {
+			if (0 < choice && choice < 10) {
 				amount_menu = false;
 				function_menu = true;
 			}
@@ -106,30 +111,34 @@ int menu() {
 			std::cout << "5. Remove at the end" << std::endl;
 			std::cout << "6. Remove randomly" << std::endl;
 			std::cout << "7. Search" << std::endl;
+			std::cout << "8. All functions" << std::endl;
 			std::cout << "0. Back" << std::endl;
 			std::cout << std::endl;
 			std::cin >> choice;
 			switch (choice) {
 				case 1:
-					function = "push_front";
+					function = "pushFront";
 					break;
 				case 2:
-					function = "push_back";
+					function = "pushBack";
 					break;
 				case 3:
-					function = "push_random";
+					function = "pushAt";
 					break;
 				case 4:
-					function = "pop_front";
+					function = "popFront";
 					break;
 				case 5:
-					function = "pop_back";
+					function = "popBack";
 					break;
 				case 6:
-					function = "pop_random";
+					function = "popAt";
 					break;
 				case 7:
 					function = "find";
+					break;
+				case 8:
+					function = "All";
 					break;
 				case 0:
 					function_menu = false;
@@ -139,16 +148,89 @@ int menu() {
 					break;
 			}
 
-			if (0 < choice && choice < 8) {
+			if (0 < choice && choice < 9) {
 				function_menu = false;
 			}
 		}
+		std::vector <std::string> structures = { 
+			"Dynamic_Array", 
+			"Singly_Linked_List", 
+			"Doubly_Linked_List" 
+		};
+
+		std::vector <int> amounts = { 
+			1000, 
+			2000, 
+			3000, 
+			4000, 
+			5000, 
+			6000, 
+			7000, 
+			8000 
+		};
+
+		std::vector <std::string> functions = { 
+			"pushFront", 
+			"pushBack", 
+			"pushAt", 
+			"popFront", 
+			"popBack", 
+			"popAt", 
+			"find" 
+		};
+
 		if (structure != "" && function != "" && amount != 0) {
 			running = false;
 			if (structure == "All") {
-				test_structure("Dynamic_Array", amount, function);
-				test_structure("Singly_Linked_List", amount, function);
-				test_structure("Doubly_Linked_List", amount, function);
+				if (amount == -1) {
+					if (function == "All") {
+						for (const auto& s : structures) {
+							for (const auto& a : amounts) {
+								for (const auto& f : functions) {
+									test_structure(s, a, f);
+								}
+							}
+						}
+					}
+					else {
+						for (const auto& s : structures) {
+							for (const auto& a : amounts) {
+								test_structure(s, a, function);
+							}
+						}
+					}
+				}
+				else if (function == "All") {
+					for (const auto& s : structures) {
+						for (const auto& f : functions) {
+							test_structure(s, amount, f);
+						}
+					}
+				}
+				else {
+					for (const auto& s : structures) {
+						test_structure(s, amount, function);
+					}
+				}
+			}
+			else if (amount == -1) {
+				if (function == "All") {
+					for (const auto& a : amounts) {
+						for (const auto& f : functions) {
+							test_structure(structure, a, f);
+						}
+					}
+				}
+				else {
+					for (const auto& a : amounts) {
+						test_structure(structure, a, function);
+					}
+				}
+			}
+			else if (function == "All") {
+				for (const auto& f : functions) {
+					test_structure(structure, amount, f);
+				}
 			}
 			else {
 				test_structure(structure, amount, function);

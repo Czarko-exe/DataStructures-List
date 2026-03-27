@@ -35,30 +35,66 @@ std::vector<int> loadSeeds(const std::string filename) {
 void test_structure(std::string structure, int N, std::string operation) {
 	if (!fs::exists("output"))
 		fs::create_directory("output");
-	std::ofstream out("output/" + structure + "_" + operation + "_" + std::to_string(N) + ".csv");
-
+	//std::ofstream out("output/" + structure + "_" + operation + "_" + std::to_string(N) + ".csv");
+	if (!fs::exists("output/results.csv")) {
+		std::ofstream out("output/results.csv", std::ios::app);
+		out << "Struktura,Operacja,Rozmiar,Seed";
+		for (int i = 1; i <= 10; ++i) out << ",Time" << i;
+		out << "\n";
+	}
+	std::ofstream out("output/results.csv", std::ios::app);
 	std::vector<int> seeds = loadSeeds("seeds.txt");
+
 	for (int seed : seeds) {
 		std::vector<int> data = generate_data(N, seed);
-		if (structure == "Dynamic_Array") {
-			DynamicArray arr;
-			for (int x : data) {
-				arr.push_back(x);
+		std::vector<long long> times;
+		for (int i = 0; i < 10; ++i) {
+			if (structure == "Dynamic_Array") {
+				DynamicArray arr;
+				for (int x : data) arr.pushBack(x);
+				long long t = measure_time([&]() {
+					if (operation == "pushFront") arr.pushFront(123);
+					else if (operation == "pushBack") arr.pushBack(123);
+					else if (operation == "pushAt") arr.pushAt(N / 2, 123);
+					else if (operation == "popFront") arr.popFront();
+					else if (operation == "popBack") arr.popBack();
+					else if (operation == "popAt") arr.popAt(N / 2);
+					else if (operation == "find") arr.find(123);
+				});
+				times.push_back(t);
 			}
-			arr.print();
-		} else if (structure == "Singly_Linked_List") {
-			SinglyLinkedList list;
-			for (int x : data) {
-				list.pushBack(x);
+			else if (structure == "Singly_Linked_List") {
+				SinglyLinkedList list;
+				for (int x : data) list.pushBack(x);
+				long long t = measure_time([&]() {
+					if (operation == "pushFront") list.pushFront(123);
+					else if (operation == "pushBack") list.pushBack(123);
+					else if (operation == "pushAt") list.pushAt(N / 2, 123);
+					else if (operation == "popFront") list.popFront();
+					else if (operation == "popBack") list.popBack();
+					else if (operation == "popAt") list.popAt(N / 2);
+					else if (operation == "find") list.find(123);
+					});
+				times.push_back(t);
 			}
-			list.print();
-		} else if (structure == "Doubly_Linked_List") {
-			DoublyLinkedList list;
-			for (int x : data) {
-				list.pushBack(x);
+			else if (structure == "Doubly_Linked_List") {
+				DoublyLinkedList list;
+				for (int x : data) list.pushBack(x);
+				long long t = measure_time([&]() {
+					if (operation == "pushFront") list.pushFront(123);
+					else if (operation == "pushBack") list.pushBack(123);
+					else if (operation == "pushAt") list.pushAt(N / 2, 123);
+					else if (operation == "popFront") list.popFront();
+					else if (operation == "popBack") list.popBack();
+					else if (operation == "popAt") list.popAt(N / 2);
+					else if (operation == "find") list.find(123);
+					});
+				times.push_back(t);
 			}
-			list.print();
 		}
+		out << structure << "," << operation << "," << N << "," << seed;
+		for (long long t : times)
+			out << "," << t;
+		out << "\n";
 	}
-
 }
