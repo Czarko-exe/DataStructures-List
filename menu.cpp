@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
 #include "menu.hpp"
 #include "Tester.hpp"
 
@@ -12,6 +11,7 @@ int menu() {
 	std::string structure;	// Zmienna przechowująca wybraną strukturę danych
 	int amount;	// Zmienna przechowująca wybraną ilość danych
 	std::string function;	// Zmienna przechowująca wybraną funkcję do testowania
+	
 	while (running) {
 		// Wyświetlanie głównego menu
 		std::cout << "=====MENU=====" << std::endl;
@@ -155,13 +155,13 @@ int menu() {
 				function_menu = false;
 			}
 		}
-		std::vector <std::string> structures = { // Lista dostępnych struktur danych
+		std::string structures[] = { // Lista dostępnych struktur danych
 			"Dynamic_Array", 
 			"Singly_Linked_List", 
 			"Doubly_Linked_List" 
 		};
 
-		std::vector <int> amounts = { // Lista dostępnych ilości danych do testowania
+		int amounts[] = { // Lista dostępnych ilości danych do testowania
 			1000, 
 			2000, 
 			4000, 
@@ -172,7 +172,7 @@ int menu() {
 			128000 
 		};
 
-		std::vector <std::string> functions = { // Lista dostępnych funkcji do testowania+
+		std::string functions[] = { // Lista dostępnych funkcji do testowania+
 			"pushFront", 
 			"pushBack", 
 			"pushAt", 

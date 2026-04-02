@@ -3,7 +3,6 @@
 #include "DoublyLinkedList.hpp"
 #include "DynamicArray.hpp"
 #include <iostream>
-#include <vector>
 #include <chrono>
 #include <random>
 #include <fstream>
@@ -11,24 +10,24 @@
 namespace fs = std::filesystem;
 
 // Funkcja do generowania losowych danych na podstawie ziarna
-std::vector<int> generate_data(int N, int seed) {
-	std::vector<int> data(N);
+DynamicArray generate_data(int N, int seed) {
+	DynamicArray data;
 	std::mt19937 rng(seed);
 	std::uniform_int_distribution<int> dist(1, 10000);	// Zakres losowanych liczb
 
 	for (int i = 0; i < N; ++i) {
-		data[i] = dist(rng);	// Generujemy losową liczbę i zapisujemy ją do wektora
+		data.pushBack(dist(rng));	// Generujemy losową liczbę i zapisujemy ją do wektora
 	}
 	return data;
 }
 
 // Funkcja do wczytywania ziaren z pliku
-std::vector<int> loadSeeds(const std::string filename) {
-	std::vector<int> seeds;
+DynamicArray loadSeeds(const std::string filename) {
+	DynamicArray seeds;
 	std::ifstream in(filename);
 	int s;
 	while (in >> s) {
-		seeds.push_back(s);	// Wczytujemy kolejne ziarna z pliku i zapisujemy je do wektora
+		seeds.pushBack(s);	// Wczytujemy kolejne ziarna z pliku i zapisujemy je do wektora
 	}
 	return seeds;
 }
@@ -46,16 +45,17 @@ void test_structure(std::string structure, int N, std::string operation) {
 		out << "\n";
 	}
 	std::ofstream out("output/results.csv", std::ios::app);
-	std::vector<int> seeds = loadSeeds("seeds.txt");	// Wczytujemy ziarna z pliku seeds.txt
+	DynamicArray seeds = loadSeeds("seeds.txt");	// Wczytujemy ziarna z pliku seeds.txt
 
-	for (int seed : seeds) {	// Dla każdego ziarna generujemy dane i mierzymy czas wykonania operacji
-		std::vector<int> data = generate_data(N, seed);	// Generujemy dane na podstawie ziarna
-		std::vector<long long> times;	// Wektor do przechowywania czasów wykonania operacji
+	for (int s_idx = 0; s_idx < seeds.getSize(); ++s_idx) {	// Dla każdego ziarna generujemy dane i mierzymy czas wykonania operacji
+		int seed = seeds.get(s_idx);
+		DynamicArray data = generate_data(N, seed);	// Generujemy dane na podstawie ziarna
+		long long times[10] = {};
 
 		for (int i = 0; i < 10; ++i) {
 			if (structure == "Dynamic_Array") {
 				DynamicArray arr;
-				for (int x : data) arr.pushBack(x);	// Wypełniamy strukturę danymi przed testem
+				for (int d_idx = 0; d_idx < data.getSize(); ++d_idx) arr.pushBack(data.get(d_idx));	// Wypełniamy strukturę danymi przed testem
 				long long t = measure_time([&]() {	// Mierzymy czas wykonania operacji
 					if (operation == "pushFront") arr.pushFront(123);
 					else if (operation == "pushBack") arr.pushBack(123);
@@ -65,11 +65,11 @@ void test_structure(std::string structure, int N, std::string operation) {
 					else if (operation == "popAt") arr.popAt(N / 2);
 					else if (operation == "find") arr.find(123);
 				});
-				times.push_back(t);	// Zapisujemy zmierzony czas do wektora times
+				times[i] = t;	// Zapisujemy zmierzony czas do times
 			}
 			else if (structure == "Singly_Linked_List") {	// Analogicznie dla listy jednokierunkowej
 				SinglyLinkedList list;
-				for (int x : data) list.pushBack(x);
+				for (int d_idx = 0; d_idx < data.getSize(); ++d_idx) list.pushBack(data.get(d_idx));
 				long long t = measure_time([&]() {
 					if (operation == "pushFront") list.pushFront(123);
 					else if (operation == "pushBack") list.pushBack(123);
@@ -79,11 +79,11 @@ void test_structure(std::string structure, int N, std::string operation) {
 					else if (operation == "popAt") list.popAt(N / 2);
 					else if (operation == "find") list.find(123);
 					});
-				times.push_back(t);
+				times[i] = t;
 			}
 			else if (structure == "Doubly_Linked_List") {	// Analogicznie dla listy dwukierunkowej
 				DoublyLinkedList list;
-				for (int x : data) list.pushBack(x);
+				for (int d_idx = 0; d_idx < data.getSize(); ++d_idx) list.pushBack(data.get(d_idx));
 				long long t = measure_time([&]() {
 					if (operation == "pushFront") list.pushFront(123);
 					else if (operation == "pushBack") list.pushBack(123);
@@ -93,12 +93,11 @@ void test_structure(std::string structure, int N, std::string operation) {
 					else if (operation == "popAt") list.popAt(N / 2);
 					else if (operation == "find") list.find(123);
 					});
-				times.push_back(t);
+				times[i] = t;
 			}
 		}
 		out << structure << "," << operation << "," << N << "," << seed;	// Zapisujemy wyniki do pliku CSV
-		for (long long t : times)
-			out << "," << t;	
+		for (int i = 0; i < 10; ++i) out << "," << times[i];
 		out << "\n";
 	}
 }

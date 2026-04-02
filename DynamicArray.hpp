@@ -16,8 +16,8 @@ public:
 	int find(int value) const; //Wyszukuje element w tablicy
 	void print() const; //Funkcja do wyświetlania zawartości tablicy (do testów)
 
-	//int get(int index) const; //getter - zwraca wartość elementu na określonym indeksie
-	//void set(int index, int value); //setter - ustawia wartość elementu na określonym indeksie
+	int getSize() const; //Zwraca aktualny rozmiar tablicy
+	int get(int index) const;	//Zwraca wartość elementu na określonym indeksie
 
 private:
 	int* data; //Wskaźnik na dynamiczną tablicę

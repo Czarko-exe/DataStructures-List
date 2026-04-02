@@ -100,11 +100,20 @@ void DynamicArray::resize() {
 	data = newData;
 }
 
-
-
 void DynamicArray::print() const {
 	for (int i = 0; i < size; ++i) {
 		std::cout << data[i] << " "; // Wyświetlamy zawartość tablicy
 	}
 	std::cout << std::endl;
+}
+
+int DynamicArray::getSize() const {	// Zwracamy aktualny rozmiar tablicy
+	return size;
+}
+
+int DynamicArray::get(int index) const {	// Zwracamy wartość elementu na określonym indeksie, jeśli indeks jest poprawny
+	if (index >= 0 && index < size) {
+		return data[index];
+	}
+	return -1;
 }

@@ -1,10 +1,10 @@
 #pragma once
 #include <chrono>
-#include <vector>
 #include <string>
+#include "DynamicArray.hpp"
 
-std::vector<int> generate_data(int N, int seed);
-std::vector<int> loadSeeds(const std::string filename);
+DynamicArray generate_data(int N, int seed);
+DynamicArray loadSeeds(const std::string filename);
 void test_structure(std::string structure, int N, std::string operation);
 
 template<typename Func> // Funkcja do mierzenia czasu wykonania operacji
