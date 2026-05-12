@@ -32,7 +32,13 @@ Projekt został utworzony w środowisku Visual Studio.
 4. Uruchom aplikację. Obsługa programów testujących odbywa się za pomocą interaktywnego menu w konsoli.
 
 ## 📊 Wyniki badań (Sprawozdanie)
-W tym miejscu dodamy krótkie podsumowanie naszych wniosków z badań, gdy sprawozdanie będzie gotowe.
+
+Przeprowadzone badania empiryczne (dla zestawów danych od 1000 do 128 000 elementów) pozwoliły na wyciągnięcie następujących wniosków z działania poszczególnych struktur:
+
+* **Tablica dynamiczna (Dynamic Array):** Dzięki zachowaniu ciągłości zajmowanej pamięci, struktura ta pozwala na indeksowanie i łatwiejszy, bezpośredni dostęp do konkretnych pozycji. Przekłada się to na nieznacznie lepsze czasy przy wyszukiwaniu (operacja `find`) czy działaniach wewnątrz struktury w porównaniu do list, mimo tej samej złożoności teoretycznej $O(n)$. Operacje na początku struktury są jednak kosztowne czasowo ($O(n)$), ponieważ wymagają przesunięcia wszystkich elementów.
+* **Listy wiązane (Singly & Doubly Linked List):** Posiadają wysoce zoptymalizowane, stałoczasowe operacje $O(1)$ na skrajach struktury (wstawianie i usuwanie na początku oraz dodawanie na końcu). Dostęp do elementów wewnątrz listy jest jednak ograniczony koniecznością liniowego przejścia przez poprzedzające je węzły ($O(n)$).
+* **Zarządzanie pamięcią:** Użycie wskaźników w listach pozwala na modyfikowanie struktury bez konieczności kosztownego przesuwania całych bloków pamięci (jak ma to miejsce w tablicy dynamicznej). Wiąże się to jednak z dodatkowym obciążeniem i większym zużyciem pamięci na same wskaźniki.
+* [cite_start]**Doubly vs Singly Linked List:** Lista dwukierunkowa, pomimo wykorzystania większej ilości zasobów na dodatkowe wskaźniki `prev`, deklasuje listę jednokierunkową m.in. przy operacji `popBack` (usuwanie z końca). W liście jednokierunkowej usunięcie ostatniego elementu wymaga iteracji niemal całej listy ($O(n)$) , podczas gdy lista dwukierunkowa robi to w czasie stałym $O(1)$ Dodatkowo ułatwia dostęp do elementów wewnątrz dzięki możliwości nawigacji z obu stron.
 
 ## 👨‍💻 Autorzy
 [github.com/Czarko-exe](github.com/Czarko-exe)  
